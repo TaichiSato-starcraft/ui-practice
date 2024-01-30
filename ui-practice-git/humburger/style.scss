@@ -1,0 +1,212 @@
+@import "reset.css";
+
+// mixin
+
+// breakpoint
+$mb: 768px;
+// @mediaのフォーマット
+@mixin pc {
+    @media screen and (min-width: $mb) {
+        @content;
+    }
+}
+$white: #fff;
+$light-pink: #feaaaa;
+$light-black: #4d4d4d;
+$light-gray: #e5e5e5;
+
+// inner
+
+body {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background-color: rgb(255, 250, 250);
+    font-family: "Noto Sans JP", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "游ゴシック",
+        "Yu Gothic", "ＭＳＰゴシック", "MS PGothic", sans-serif;
+    @include pc {
+        font-size: 13px;
+    }
+}
+a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #4d4d4d;
+}
+
+ul,
+li {
+    list-style: none;
+}
+main {
+    background-color: #f1f1f1;
+    height: 800px;
+    display: flex;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    margin: auto;
+}
+
+.footer {
+    background-color: #f6f6f6;
+    height: 200px;
+    display: flex;
+}
+
+.footer div {
+    margin: auto;
+}
+
+/* ヘッダー */
+
+.header {
+    background-color: white;
+    width: 100%;
+    height: 4rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    &__inner {
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: inherit;
+        position: relative;
+    }
+    &__title {
+        width: 80px;
+        @include pc {
+            width: 120px;
+        }
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    &__nav {
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        transform: translateX(100%);
+        background-color: #fff;
+        transition: ease 0.4s;
+        opacity: 0.8;
+        @include pc {
+            position: static;
+            transform: initial;
+            background-color: inherit;
+            height: inherit;
+            display: flex;
+            justify-content: end;
+            width: 50%;
+        }
+        a{
+            opacity: 1;
+        }
+        &.active {
+            transform: translateX(0%);
+        }
+    }
+    &__hamburger {
+        width: 48px;
+        height: 100%;
+    }
+}
+/* ヘッダーのロゴ部分 */
+
+/* ヘッダーのナビ部分 */
+
+.nav__items {
+    @include pc {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        height: initial;
+        justify-content: space-between;
+    }
+}
+
+.nav-items {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    @include pc {
+        position: inherit;
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+    }
+    &__item a {
+        color: black;
+        width: 100%;
+        display: block;
+        text-align: center;
+        font-size: 1rem;
+        margin-bottom: 24px;
+        @include pc {
+            margin-bottom: 0;
+        }
+    }
+    &__item:last-child a {
+        margin-bottom: 0;
+    }
+}
+
+/* ナビのリンク */
+/* ハンバーガーメニュー */
+.hamburger {
+    background-color: transparent;
+    border-color: transparent;
+    z-index: 9999;
+    @include pc {
+        display: none;
+    }
+    span {
+        width: 100%;
+        height: 1px;
+        background-color: #000;
+        position: relative;
+        transition: ease 0.4s;
+        display: block;
+        &:nth-child(1) {
+            top: 0;
+        }
+        &:nth-child(2) {
+            margin: 8px 0;
+        }
+        &:nth-child(3) {
+            top: 0;
+        }
+    }
+}
+/* ハンバーガーメニューの線 */
+
+/* ハンバーガーメニュークリック後のスタイル */
+
+.hamburger.active{
+    span:nth-child(1) {
+        top: 5px;
+        transform: rotate(45deg);
+    }
+    span:nth-child(2) {
+        opacity: 0;
+    }
+    span:nth-child(3) {
+        top: -13px;
+        transform: rotate(-45deg);
+    }
+}
