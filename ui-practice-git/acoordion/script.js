@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function initEventListeners() {
       const windowWidth = window.innerWidth;
 
-      if (windowWidth > 768) {
+      if (windowWidth > 880) {
           // hoverイベント用
           items.forEach(function(item) {
               item.addEventListener('mouseenter', function() {
