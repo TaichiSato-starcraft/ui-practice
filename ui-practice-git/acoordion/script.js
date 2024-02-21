@@ -36,9 +36,88 @@ $('.page-top-button__link').click(function() {
   return false;
 });
 
-$('.nav-items__item').on('click', function() {
-  $(this).toggleClass('is-open');
-  $(this).find('.dropdown-items').toggleClass('is-open');
-  $(this).find('.dropdown-items__item').toggleClass('is-open');
+$('.page-top-button__link').click(function() {
+  $('body, html').animate({
+    scrollTop: 0
+  }, 500);
+  return false;
+});
 
+document.addEventListener('DOMContentLoaded', function() {
+  const items = document.querySelectorAll('.nav-items__item--p');
+
+  function toggleItems(item) {
+      // すでに開いているアイテムを閉じる
+      document.querySelectorAll('.dropdown-items.is-open').forEach(function(openItem) {
+          if (item.nextElementSibling !== openItem) {
+              openItem.classList.remove('is-open');
+          }
+      });
+
+      document.querySelectorAll('.dropdown-items__item.is-open').forEach(function(openItem) {
+          if (!item.nextElementSibling.contains(openItem)) {
+              openItem.classList.remove('is-open');
+          }
+      });
+
+      // クリックされたアイテムを開く
+      item.classList.toggle('is-open');
+      if (item.nextElementSibling) {
+          item.nextElementSibling.classList.toggle('is-open');
+          item.nextElementSibling.querySelectorAll('.dropdown-items__item').forEach(function(subItem) {
+              subItem.classList.toggle('is-open');
+          });
+      }
+  }
+
+  function initEventListeners() {
+      const windowWidth = window.innerWidth;
+
+      if (windowWidth > 768) {
+          // hoverイベント用
+          items.forEach(function(item) {
+              item.addEventListener('mouseenter', function() {
+                  toggleItems(this);
+              });
+          });
+
+          // dropdown-itemsがhoverされていないときに閉じるイベントを追加
+          document.querySelectorAll('.dropdown-items').forEach(function(dropdown) {
+              dropdown.addEventListener('mouseleave', function() {
+                  this.classList.remove('is-open');
+                  this.querySelectorAll('.dropdown-items__item').forEach(function(subItem) {
+                      subItem.classList.remove('is-open');
+                  });
+                  // 親要素のnav-items__item--pのis-openも取り除く
+                  if (this.previousElementSibling.classList.contains('nav-items__item--p')) {
+                      this.previousElementSibling.classList.remove('is-open');
+                  }
+              });
+          });
+      } else {
+          // クリックイベント用
+          items.forEach(function(item) {
+              item.addEventListener('click', function() {
+                  toggleItems(this);
+              });
+          });
+      }
+  }
+
+  // イベントリスナーを初期化
+  initEventListeners();
+
+  // ウィンドウリサイズ時にイベントリスナーを再設定
+  window.addEventListener('resize', function() {
+      // 既存のイベントリスナーをクリア
+      items.forEach(function(item) {
+          item.removeEventListener('click', toggleItems);
+          item.removeEventListener('mouseenter', toggleItems);
+      });
+      document.querySelectorAll('.dropdown-items').forEach(function(dropdown) {
+          dropdown.removeEventListener('mouseleave', toggleItems);
+      });
+      // イベントリスナーを再初期化
+      initEventListeners();
+  });
 });

@@ -45,7 +45,7 @@ li {
   }
 }
 .content .header {
-  background-color: rgba(255, 255, 255, 0.6862745098);
+  background-color: #fff;
   width: 100%;
   height: 4rem;
   position: fixed;
@@ -177,6 +177,12 @@ li {
   display: flex;
   flex-direction: column;
 }
+@media screen and (max-width: 768px) {
+  .nav-items {
+    height: 40vh;
+    width: 100%;
+  }
+}
 @media screen and (min-width: 768px) {
   .nav-items {
     width: auto;
@@ -190,8 +196,8 @@ li {
 .nav-items__item {
   display: flex;
   flex-direction: column;
-  height: 4rem;
   width: 100%;
+  height: 100%;
   padding: 0 0.5rem;
   display: flex;
   align-items: center;
@@ -199,11 +205,25 @@ li {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+  z-index: 1;
 }
-.nav-items__item.is-open {
-  background-color: #fe9393;
+@media screen and (min-width: 768px) {
+  .nav-items__item:hover {
+    border-bottom: #feaaaa 2.5px solid;
+  }
 }
-.nav-items__item p {
+@media screen and (max-width: 768px) {
+  .nav-items__item {
+    height: -moz-fit-content;
+    height: fit-content;
+    padding: 0;
+    border-bottom: #dddddd 0.5px solid;
+  }
+  .nav-items__item:first-child {
+    border-top: #dddddd 0.5px solid;
+  }
+}
+.nav-items__item--p {
   color: #191919;
   width: 100%;
   padding: 0.5rem;
@@ -211,18 +231,24 @@ li {
   text-align: center;
   font-size: 1rem;
 }
-.nav-items__item p .dropdown-items {
+.nav-items__item--p .dropdown-items {
   position: absolute;
   top: 100%;
 }
 @media screen and (min-width: 768px) {
-  .nav-items__item p {
+  .nav-items__item--p {
     margin-bottom: 0;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 880px) {
-  .nav-items__item p {
+  .nav-items__item--p {
     padding: 0rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .nav-items__item:last-child {
+    border-bottom: 1px solid;
+    border-color: #dddddd;
   }
 }
 .nav-items__item__item:last-child a {
@@ -233,45 +259,74 @@ li {
     align-items: center;
   }
 }
-.nav-items__item:hover .dropdown-items {
-  display: block;
+@media screen and (min-width: 768px) {
+  .nav-items__item:hover .dropdown-items {
+    display: block;
+  }
 }
 
 .dropdown-items {
-  position: absolute;
-  opacity: 0;
+  display: none;
   transition: 0.3s ease-in-out;
-  pointer-events: none;
   left: 100%;
-}
-@media screen and (max-width: 768px) {
-  .dropdown-items.is-open {
-    opacity: 1;
-  }
+  display: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 @media screen and (min-width: 768px) {
   .dropdown-items {
+    position: absolute;
     top: 100%;
     left: auto;
+    display: block;
+  }
+}
+@media screen and (max-width: 768px) {
+  .dropdown-items {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .dropdown-items.is-open {
+    display: block;
+  }
+}
+@media screen and (min-width: 768px) {
+  .dropdown-items.is-open {
+    display: block;
   }
 }
 .dropdown-items__item {
   padding: 0.5rem;
   width: 7rem;
   text-align: center;
-  opacity: 0;
-  transition: 0.3s ease-in-out;
-  pointer-events: none;
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .dropdown-items__item {
+    width: 100%;
+  }
 }
 .dropdown-items__item.is-open {
-  opacity: 1;
-  background-color: #f8ff9d;
+  display: block;
+  background-color: #fff;
+}
+@media screen and (max-width: 768px) {
+  .dropdown-items__item.is-open {
+    background-color: #f8f8f8;
+    border-top: #dddddd 1px solid;
+  }
 }
 .dropdown-items__item:hover {
-  background-color: #f8ff9d;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  background-color: #f8f8f8;
+}
+.dropdown-items__item a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: inherit;
+  z-index: 10000;
 }
 
 /* ハンバーガーメニュー */
@@ -337,10 +392,10 @@ li {
   align-items: center;
   padding-bottom: 5px;
   border-radius: 50%;
-  border: #e5e5e5;
+  border: #f8f8f8;
   width: 88px;
   height: 88px;
-  color: #e5e5e5;
+  color: #f8f8f8;
   background: #fff;
 }
 .page-top-button__button--svg {
